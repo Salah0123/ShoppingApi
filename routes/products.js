@@ -33,19 +33,19 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5,
   },
   fileFilter: fileFilter,
-});
+}).array("myfile", 12)
 
 
 router.get("/", Controller.getAllProducts);
 
-router.post('/addProduct',authMW ,upload.single('myfile'),Controller.addProduct)
+router.post('/addProduct',authMW ,upload,Controller.addProduct)
 
 router.get("/byCategory/:id", Controller.getProductsByCategory)
 
 router.get("/:id",Controller.getProductByID)
 
 
-router.patch("/:id",authMW ,isAdmin , upload.single("myfile"), Controller.updateProduct);
+router.patch("/:id",authMW ,isAdmin , upload, Controller.updateProduct);
 
 
 

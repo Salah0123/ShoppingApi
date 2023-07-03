@@ -42,11 +42,11 @@ const {page = 1 , limit=10} = req.query
 };
 
 exports.addProduct = (req, res, next) => {
-  console.log(req.file);
+  console.log(req.files);
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
-    image: req.file.path,
+    image: req.files,
     category:req.body.category,
     color:req.body.color,
     size:req.body.size,
@@ -85,7 +85,7 @@ exports.updateProduct = (req, res, next) => {
   const newPrd = {
     name: req.body.name,
     price: req.body.price,
-    image: req.file.path,
+    image: req.files,
     category: req.body.category,
     color: req.body.color,
     size: req.body.size,
