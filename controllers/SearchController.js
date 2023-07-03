@@ -60,10 +60,10 @@ exports.searchFunc = (req, res, next) => {
 };
 
 exports.filterFunc = (req, res, next) => {
-  const { color, size, price, model } = req.query;
+  const { color, size, maxprice,minprice,  model } = req.query;
   const query = {};
   const orArray = [];
-
+  
   if (color) {
     orArray.push({ color: { $regex: color } });
   }
@@ -73,14 +73,14 @@ exports.filterFunc = (req, res, next) => {
   if (model) {
     orArray.push({ model: { $regex: model } });
   }
-  if (price && !isNaN(price)) {
-    orArray.push({ price: { $lte: price } });
+  if (  maxprice && !isNaN(maxprice) &&  minprice && !isNaN(minprice)) {
+    orArray.push({ price: { $gte: minprice, $lte: maxprice } });
   }
-
+  
   if (orArray.length > 0) {
     query.$or = orArray;
   }
-
+  
   Product.find(query)
     .then((doc) => {
       if (doc.length >= 1) {
