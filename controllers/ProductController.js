@@ -107,6 +107,24 @@ exports.updateProduct = (req, res, next) => {
     });
 };
 
+exports.changeQuantity = (req, res, next) => {
+  const newPrd = {
+    quantity: req.body.quantity,
+  };
+  Product.findOneAndUpdate({ _id: req.params.id }, { $set: newPrd })
+    .then((prd) => {
+      console.log(prd);
+      if (prd) {
+        res.status(202).json({ message: "Product Updated Successfully" });
+      } else {
+        res.status(404).json({ message: "Product Not Found" });
+      }
+    })
+    .catch((err) => {
+      res.status(404).json({ message: err });
+    });
+};
+
 exports.deleteProduct = (req, res, next) => {
   Product.findOneAndDelete({ _id: req.params.id })
     .then((data) => {
