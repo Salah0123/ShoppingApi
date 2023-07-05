@@ -78,7 +78,7 @@ exports.filterFunc = (req, res, next) => {
   }
   
   if (orArray.length > 0) {
-    query.$or = orArray;
+    query.$and = orArray;
   }
   
   Product.find(query)
