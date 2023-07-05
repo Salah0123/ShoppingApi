@@ -1,7 +1,4 @@
-
 const Product = require("./../models/productSchema");
-
-
 
 // exports.searchFunc = (req, res, next) => {
 //   const { page = 1, limit = 10, search, category = "All" } = req.query;
@@ -40,9 +37,6 @@ const Product = require("./../models/productSchema");
 //     .catch((error) => next(error));
 // };
 
-
-
-
 exports.searchFunc = (req, res, next) => {
   const { page = 1, limit = 10, search, category = "All" } = req.query;
   Product.find({
@@ -60,30 +54,38 @@ exports.searchFunc = (req, res, next) => {
 };
 
 exports.filterFunc = (req, res, next) => {
-  const { color, size, maxprice,minprice,  model } = req.query;
+  const { color, size, maxprice, minprice, model } = req.query;
   const query = {};
   const orArray = [];
-  
-  if (color) {
+  console.log(+req.query.minprice);
+
+  if (color != "undefined") {
+    console.log(color);
     orArray.push({ color: { $regex: color } });
   }
-  if (size) {
+  if (size != "undefined") {
     orArray.push({ size: { $regex: size } });
   }
-  if (model) {
+  if (model != "undefined") {
     orArray.push({ model: { $regex: model } });
   }
-  if (  maxprice && !isNaN(maxprice) &&  minprice && !isNaN(minprice)) {
-    orArray.push({ price: { $gte: minprice, $lte: maxprice } });
+  if (
+    maxprice != "undefined" &&
+    !isNaN(maxprice) &&
+    minprice != "undefined" &&
+    !isNaN(minprice)
+  ) {
+    orArray.push({ price: { $gte: +minprice, $lte: +maxprice } });
   }
-  
+
   if (orArray.length > 0) {
     query.$and = orArray;
   }
-  
+
   Product.find(query)
     .then((doc) => {
       if (doc.length >= 1) {
+        console.log(doc);
         res.status(200).json({ doc });
       } else {
         const error = new Error("No Product Found");
