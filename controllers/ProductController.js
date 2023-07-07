@@ -85,7 +85,7 @@ exports.updateProduct = (req, res, next) => {
   const newPrd = {
     name: req.body.name,
     price: req.body.price,
-    image: req.files,
+    // image: req.files,
     category: req.body.category,
     color: req.body.color,
     size: req.body.size,

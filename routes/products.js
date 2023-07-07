@@ -45,7 +45,7 @@ router.get("/byCategory/:id", Controller.getProductsByCategory)
 router.get("/:id",Controller.getProductByID)
 
 
-router.patch("/:id",authMW ,isAdmin , upload, Controller.updateProduct);
+router.patch("/:id",authMW ,isAdmin , Controller.updateProduct);
 router.patch("/changeQuantity/:id", authMW, Controller.changeQuantity);
 
 
