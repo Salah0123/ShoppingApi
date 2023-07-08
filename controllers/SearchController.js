@@ -54,7 +54,7 @@ exports.searchFunc = (req, res, next) => {
 };
 
 exports.filterFunc = (req, res, next) => {
-  const { color, size, maxprice, minprice, model } = req.query;
+  const { color, size, maxprice, minprice, model, categoryId } = req.query;
   const query = {};
   const orArray = [];
   console.log(+req.query.minprice);
@@ -81,6 +81,9 @@ exports.filterFunc = (req, res, next) => {
   if (orArray.length > 0) {
     query.$and = orArray;
   }
+
+  const objectId = mongoose.Types.ObjectId;
+  orArray.push({ category: new objectId(categoryId) });
 
   Product.find(query)
     .then((doc) => {
