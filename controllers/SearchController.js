@@ -1,4 +1,5 @@
 const Product = require("./../models/productSchema");
+const mongoose = require("mongoose");
 
 // exports.searchFunc = (req, res, next) => {
 //   const { page = 1, limit = 10, search, category = "All" } = req.query;
